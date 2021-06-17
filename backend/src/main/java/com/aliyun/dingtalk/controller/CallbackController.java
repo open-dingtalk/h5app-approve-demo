@@ -21,7 +21,6 @@ public class CallbackController {
     @Autowired
     private CallbackService callbackService;
 
-
     @PostMapping("/callback")
     public Map<String, String> callback(@RequestParam(value = "msg_signature") String msgSignature,
                                         @RequestParam(value = "timestamp") String timeStamp,

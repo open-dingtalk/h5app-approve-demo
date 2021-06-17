@@ -24,7 +24,6 @@ public interface ProcessInstanceService {
     default ServiceResult createProcessInstance(ProcessInstanceInputVO processInstanceInput) {
 
         try {
-
             // 创建client
             DefaultDingTalkClient client = new DefaultDingTalkClient(UrlConstant.CREATE_PROCESS_INSTANCE_URL);
 
@@ -50,7 +49,7 @@ public interface ProcessInstanceService {
 
     }
 
-    default void postHandler() {};
+    default void postHandler() {}
 
     OapiProcessinstanceGetResponse.ProcessInstanceTopVo getProcessInstanceById(String instanceId);
 }

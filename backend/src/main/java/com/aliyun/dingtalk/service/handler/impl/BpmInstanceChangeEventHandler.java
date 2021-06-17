@@ -1,5 +1,6 @@
 package com.aliyun.dingtalk.service.handler.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.aliyun.dingtalk.service.handler.EventHandler;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class BpmInstanceChangeEventHandler implements EventHandler {
 
     @Override
-    public void handler() {
+    public void handler(JSONObject eventJson) {
 
     }
 }

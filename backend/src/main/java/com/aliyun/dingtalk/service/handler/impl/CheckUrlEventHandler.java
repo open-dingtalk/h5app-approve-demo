@@ -1,5 +1,6 @@
 package com.aliyun.dingtalk.service.handler.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.aliyun.dingtalk.service.handler.EventHandler;
 
 /**
@@ -8,7 +9,7 @@ import com.aliyun.dingtalk.service.handler.EventHandler;
 public class CheckUrlEventHandler implements EventHandler {
 
     @Override
-    public void handler() {
+    public void handler(JSONObject eventJson) {
 
     }
 }

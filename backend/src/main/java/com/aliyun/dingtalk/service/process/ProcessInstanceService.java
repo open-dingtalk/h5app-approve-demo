@@ -7,6 +7,7 @@ import com.aliyun.dingtalk.util.AccessTokenUtil;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.request.OapiProcessinstanceCreateRequest;
 import com.dingtalk.api.response.OapiProcessinstanceCreateResponse;
+import com.dingtalk.api.response.OapiProcessinstanceGetResponse;
 import com.taobao.api.ApiException;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public interface ProcessInstanceService {
             if (!response.isSuccess()) {
                 return ServiceResult.failure(String.valueOf(response.getErrorCode()), response.getErrmsg());
             }
-
+            System.out.println(response.getProcessInstanceId());
             // 流程创建完成处理业务逻辑
             postHandler();
 
@@ -45,4 +46,6 @@ public interface ProcessInstanceService {
     }
 
     default void postHandler(){};
+
+    OapiProcessinstanceGetResponse.ProcessInstanceTopVo getProcessInstanceById(String instanceId);
 }

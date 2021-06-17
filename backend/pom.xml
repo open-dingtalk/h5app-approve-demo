@@ -50,14 +50,6 @@
 
         <dependency>
             <groupId>com.taobao.top</groupId>
-            <artifactId>lippi-oapi-encrpt</artifactId>
-            <version>dingtalk-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/lippi-oapi-encrpt.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>com.taobao.top</groupId>
             <artifactId>top-api-sdk-dev</artifactId>
             <version>dingtalk-SNAPSHOT</version>
             <scope>system</scope>

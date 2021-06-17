@@ -29,10 +29,11 @@ public class CallbackServiceImpl implements CallbackService {
 
             // 2. 反序列化回调事件json数据
             JSONObject eventJson = JSON.parseObject(decryptMsg);
+            log.info("eventJson: {}", eventJson);
             String eventType = eventJson.getString("EventType");
 
             // 3. 根据EventType分类处理
-            eventHandlerFactoryProducer.getEventHandlerFactory(eventType).getEventHandler(eventType).handler();
+            eventHandlerFactoryProducer.getEventHandlerFactory(eventType).getEventHandler(eventType).handler(eventJson);
 
             // 4. 返回success的加密数据
             Map<String, String> successMap = callbackCrypto.getEncryptedMap("success");

@@ -28,7 +28,7 @@ public class CallbackController {
                                         @RequestParam(value = "nonce") String nonce,
                                         @RequestBody JSONObject json) {
 
-        log.info("CallbackController#callback parmas: msg_signature: {}, timeStamp: {}, nonce: {}, json: {}", msgSignature, timeStamp, nonce, json);
+        log.info("CallbackController#callback params: msg_signature: {}, timeStamp: {}, nonce: {}, json: {}", msgSignature, timeStamp, nonce, json);
         return callbackService.callback(msgSignature, timeStamp, nonce, json);
     }
 }

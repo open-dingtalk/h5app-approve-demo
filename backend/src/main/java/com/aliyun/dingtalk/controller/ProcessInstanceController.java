@@ -28,6 +28,7 @@ public class ProcessInstanceController {
     @Autowired
     private ProcessInstanceService processInstanceService;
 
+
     /**
      * 发起审批
      */
@@ -90,6 +91,19 @@ public class ProcessInstanceController {
         return ServiceResult.success(processInstanceService.getProcessInstanceById(instanceId));
 
     }
+
+    /**
+     * 根据审批实例id获取审批详情
+     *
+     * @return
+     */
+    @GetMapping("/instance")
+    public ServiceResult getProcessInstanceList() {
+
+        return ServiceResult.success(processInstanceService.getProcessInstanceList());
+
+    }
+
 }
 
 

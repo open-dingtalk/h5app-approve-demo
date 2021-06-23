@@ -2,10 +2,10 @@ package com.aliyun.dingtalk.service.callback.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.aliyun.dingtalk.constant.Constant;
+import com.aliyun.dingtalk.config.AppConfig;
 import com.aliyun.dingtalk.service.callback.CallbackService;
-import com.aliyun.dingtalk.util.DingCallbackCrypto;
 import com.aliyun.dingtalk.service.factory.EventHandlerFactoryProducer;
+import com.aliyun.dingtalk.util.DingCallbackCrypto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +19,14 @@ public class CallbackServiceImpl implements CallbackService {
     @Autowired
     private EventHandlerFactoryProducer eventHandlerFactoryProducer;
 
+    @Autowired
+    private AppConfig appConfig;
+
     @Override
     public Map<String, String> callback(String msgSignature, String timeStamp, String nonce, JSONObject json) {
         try {
             // 1.使用加解密类型
-            DingCallbackCrypto callbackCrypto = new DingCallbackCrypto(Constant.TOKEN, Constant.AES_KEY, Constant.OWNER_KEY);
+            DingCallbackCrypto callbackCrypto = new DingCallbackCrypto(appConfig.getToken(), appConfig.getAesKey(), appConfig.getOwnerKey());
             String encryptMsg = json.getString("encrypt");
             String decryptMsg = callbackCrypto.getDecryptMsg(msgSignature, timeStamp, nonce, encryptMsg);
 

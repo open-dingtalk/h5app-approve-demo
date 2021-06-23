@@ -1,6 +1,5 @@
 package com.aliyun.dingtalk.util;
 
-import com.aliyun.dingtalk.constant.Constant;
 import com.aliyun.dingtalk.constant.UrlConstant;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.request.OapiGettokenRequest;
@@ -14,13 +13,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AccessTokenUtil {
 
-    public static String getToken() throws RuntimeException {
+
+    public static String getToken(String appKey, String appSecret) throws RuntimeException {
         try {
+
             DefaultDingTalkClient client = new DefaultDingTalkClient(UrlConstant.GET_TOKEN_URL);
             OapiGettokenRequest request = new OapiGettokenRequest();
 
-            request.setAppkey(Constant.APPKEY);
-            request.setAppsecret(Constant.APPSECRET);
+            request.setAppkey(appKey);
+            request.setAppsecret(appSecret);
             request.setHttpMethod("GET");
             OapiGettokenResponse response = client.execute(request);
             String accessToken = response.getAccessToken();

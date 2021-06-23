@@ -1,5 +1,6 @@
 package com.aliyun.dingtalk.service.user.impl;
 
+import com.aliyun.dingtalk.config.AppConfig;
 import com.aliyun.dingtalk.constant.UrlConstant;
 import com.aliyun.dingtalk.service.user.DingTalkUserService;
 import com.aliyun.dingtalk.util.AccessTokenUtil;
@@ -11,6 +12,7 @@ import com.dingtalk.api.response.OapiV2UserGetResponse;
 import com.dingtalk.api.response.OapiV2UserGetuserinfoResponse;
 import com.taobao.api.ApiException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -23,11 +25,13 @@ import java.util.Objects;
 @Service
 public class DingTalkUserServiceImpl implements DingTalkUserService {
 
+    @Autowired
+    private AppConfig appConfig;
 
     public OapiV2UserGetResponse.UserGetResponse getUserInfo(String authCode) {
 
         // 1. 获取access_token
-        String accessToken = AccessTokenUtil.getToken();
+        String accessToken = AccessTokenUtil.getToken(appConfig.getAppKey(), appConfig.getAppSecret());
 
         // 2. 获取用户ID
         String userId = getUserId(authCode, accessToken);

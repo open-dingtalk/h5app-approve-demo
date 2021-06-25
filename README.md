@@ -30,10 +30,6 @@ git clone
 https://github.com/open-dingtalk/h5app-approve-demo.git
 ```
 
-### 修改后端服务域名&corpId
-
-![image-20210617180740224](/Users/wan/Library/Application Support/typora-user-images/image-20210617180740224.png)
-
 ### 使用命令行安装依赖&打包
 
 ```txt

@@ -11,11 +11,10 @@ import com.dingtalk.api.response.OapiProcessinstanceGetResponse;
 import com.taobao.api.ApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface ProcessInstanceService {
 
     Logger logger = LoggerFactory.getLogger(ProcessInstanceService.class);

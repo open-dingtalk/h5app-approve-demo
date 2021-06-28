@@ -4,21 +4,21 @@
 
 ##### 配置事件订阅
 
-![image-20210617175113262](/Users/wan/Library/Application Support/typora-user-images/image-20210617175113262.png)
+![image-20210617175113262](https://img.alicdn.com/imgextra/i3/O1CN01yseZfx1PokSgnxFHI_!!6000000001888-2-tps-1962-1382.png)
 
-![image-20210617175143337](/Users/wan/Library/Application Support/typora-user-images/image-20210617175143337.png)
+![image-20210617175143337](https://img.alicdn.com/imgextra/i1/O1CN01M2yocP1k484ng0lJX_!!6000000004629-2-tps-2302-1452.png)
 
 ##### 申请只能工作流权限
 
-![image-20210617175244254](/Users/wan/Library/Application Support/typora-user-images/image-20210617175244254.png)
+![image-20210617175244254](https://img.alicdn.com/imgextra/i2/O1CN01iae3im1Ccl5X9ezcy_!!6000000000102-2-tps-2864-1050.png)
 
 ##### 创建新表单（物品领用）
 
-![image-20210617175833721](/Users/wan/Library/Application Support/typora-user-images/image-20210617175833721.png)
+![image-20210617175833721](https://img.alicdn.com/imgextra/i3/O1CN01CX9YPd1UHq54kNi9f_!!6000000002493-2-tps-2192-1182.png)
 
 **processCode** 审批模板的唯一编码，在审批模板编辑页的URL中查看。
 
-![image-20210617181749035](/Users/wan/Library/Application Support/typora-user-images/image-20210617181749035.png)
+![image-20210617181749035](https://img.alicdn.com/imgextra/i1/O1CN0176xhxY1KPUXbCacPq_!!6000000001156-2-tps-2846-1052.png)
 
 ## Getting Started
 
@@ -36,29 +36,27 @@ https://github.com/open-dingtalk/h5app-approve-demo.git
 cd fronted/
 ```
 
-![image-20210617180814765](/Users/wan/Library/Application Support/typora-user-images/image-20210617180814765.png)
+![image-20210617180814765](https://img.alicdn.com/imgextra/i3/O1CN012KHlLL28HumHd2Sii_!!6000000007908-2-tps-2388-568.png)
 
 ```txt
 npm install
 ```
 
-![image-20210617180910689](/Users/wan/Library/Application Support/typora-user-images/image-20210617180910689.png)
+![image-20210617180910689](https://img.alicdn.com/imgextra/i1/O1CN01lvjJRL1VfwXcafY1f_!!6000000002681-2-tps-2162-934.png)
 
 ```txt
 npm run build
 ```
 
-![image-20210617181053688](/Users/wan/Library/Application Support/typora-user-images/image-20210617181053688.png)
+![image-20210617181053688](https://img.alicdn.com/imgextra/i4/O1CN01ggVh2o1opzw8oT2fq_!!6000000005275-2-tps-2276-954.png)
 
 ### 将打包好的静态资源文件放入后端服务
 
-![img](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/a/RNErEm4k2S2KW0jV/714875c9b4294970b07004542047fc672460.png)
+![img](https://img.alicdn.com/imgextra/i3/O1CN01nnr42n1tgu9N0xAp9_!!6000000005932-2-tps-1728-1128.png)
 
 ### 替换后端应用配置
 
-![image-20210617181426867](/Users/wan/Library/Application Support/typora-user-images/image-20210617181426867.png)
-
-### 启动项目使用钉钉访问服务
+![image-20210628141544633](https://img.alicdn.com/imgextra/i1/O1CN01eJCtZM1dnkDEj55ap_!!6000000003781-2-tps-2602-1186.png)
 
 
 

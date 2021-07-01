@@ -57,6 +57,14 @@ processCode=xxxxx
 3. 进入应用-事件订阅获取aesKey、token
 4. 审批管理后台processCode，参考文档：https://developers.dingtalk.com/document/app/workflow-overview
 
+### 克隆代码仓库到本地
+
+git clone
+
+```
+https://github.com/open-dingtalk/h5app-approve-demo.git
+```
+
 ### 修改前端页面
 
 #### 使用命令行安装依赖&打包

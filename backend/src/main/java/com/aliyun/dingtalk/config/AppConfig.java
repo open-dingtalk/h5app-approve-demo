@@ -15,8 +15,6 @@ public class AppConfig {
 
     private String appSecret;
 
-    private String ownerKey;
-
     private String aesKey;
 
     private String token;

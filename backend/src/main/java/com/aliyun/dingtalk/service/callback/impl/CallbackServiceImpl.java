@@ -26,7 +26,7 @@ public class CallbackServiceImpl implements CallbackService {
     public Map<String, String> callback(String msgSignature, String timeStamp, String nonce, JSONObject json) {
         try {
             // 1.使用加解密类型
-            DingCallbackCrypto callbackCrypto = new DingCallbackCrypto(appConfig.getToken(), appConfig.getAesKey(), appConfig.getOwnerKey());
+            DingCallbackCrypto callbackCrypto = new DingCallbackCrypto(appConfig.getToken(), appConfig.getAesKey(), appConfig.getAppKey());
             String encryptMsg = json.getString("encrypt");
             String decryptMsg = callbackCrypto.getDecryptMsg(msgSignature, timeStamp, nonce, encryptMsg);
 

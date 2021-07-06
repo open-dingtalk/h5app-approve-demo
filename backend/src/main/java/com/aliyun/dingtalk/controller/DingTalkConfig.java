@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class DingTailConfig {
+public class DingTalkConfig {
 
     @Autowired
     private AppConfig appConfig;
@@ -23,6 +23,6 @@ public class DingTailConfig {
     public ServiceResult<Map> getDingTalkConfig() {
         Map<String, String> configMap = new HashMap<>();
         configMap.put("corpId", appConfig.getCorpId());
-        return ServiceResult.success(configMap);
+        return ServiceResult.getSuccessResult(configMap);
     }
 }

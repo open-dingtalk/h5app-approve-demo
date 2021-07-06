@@ -1,67 +1,64 @@
 package com.aliyun.dingtalk.model;
 
-import java.io.Serializable;
-
 /**
- *service层返回对象列表封装
- * @param <T>
+ * RPC服务返回结果
  */
-public class ServiceResult<T>  implements Serializable{
+public class ServiceResult<T> {
 
-    private boolean success = false;
+    private boolean success;
 
-    private String code;
+    private String errorCode;
 
-    private String message;
+    private String errorMsg;
 
-    private T result;
-
-    private ServiceResult() {
-    }
-
-    public static <T> ServiceResult<T> success(T result) {
-        ServiceResult<T> item = new ServiceResult<T>();
-        item.success = true;
-        item.result = result;
-        item.code = "0";
-        item.message = "success";
-        return item;
-    }
-
-    public static <T> ServiceResult<T> failure(String errorCode, String errorMessage) {
-        ServiceResult<T> item = new ServiceResult<T>();
-        item.success = false;
-        item.code = errorCode;
-        item.message = errorMessage;
-        return item;
-    }
-
-    public static <T> ServiceResult<T> failure(String errorCode) {
-        ServiceResult<T> item = new ServiceResult<T>();
-        item.success = false;
-        item.code = errorCode;
-        item.message = "failure";
-        return item;
-    }
-
-    public boolean hasResult() {
-        return result != null;
-    }
+    private T data;
 
     public boolean isSuccess() {
         return success;
     }
 
-    public T getResult() {
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public static <T> ServiceResult<T> getSuccessResult(T t) {
+        ServiceResult<T> result = new ServiceResult<>();
+        result.setSuccess(true);
+        result.setData(t);
+
         return result;
     }
 
-    public String getCode() {
-        return code;
-    }
+    public static <T> ServiceResult<T> getFailureResult(String code, String msg) {
+        ServiceResult<T> result = new ServiceResult<>();
+        result.setSuccess(false);
+        result.setErrorCode(code);
+        result.setErrorMsg(msg);
 
-    public String getMessage() {
-        return message;
+        return result;
     }
-
 }

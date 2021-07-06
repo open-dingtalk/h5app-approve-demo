@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.dingtalk.config.AppConfig;
 import com.aliyun.dingtalk.service.callback.CallbackService;
-import com.aliyun.dingtalk.service.factory.EventHandlerFactoryProducer;
+import com.aliyun.dingtalk.factory.EventHandlerFactoryProducer;
 import com.aliyun.dingtalk.util.DingCallbackCrypto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

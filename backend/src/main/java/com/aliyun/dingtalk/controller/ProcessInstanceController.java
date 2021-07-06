@@ -37,7 +37,7 @@ public class ProcessInstanceController {
 //		processInstanceInputVO = buildProcessInstanceInputVO();
         log.info("ProcessInstanceController#startProcessInstance params: {}", JSONObject.toJSON(processInstanceInputVO));
 
-        return processInstanceService.createProcessInstance(processInstanceInputVO);
+        return ServiceResult.getSuccessResult(processInstanceService.createProcessInstance(processInstanceInputVO));
     }
 
     // 构建请求对象
@@ -88,7 +88,7 @@ public class ProcessInstanceController {
     @GetMapping("/instance/{instanceId}")
     public ServiceResult getProcessInstanceById(@PathVariable String instanceId) {
 
-        return ServiceResult.success(processInstanceService.getProcessInstanceById(instanceId));
+        return ServiceResult.getSuccessResult(processInstanceService.getProcessInstanceById(instanceId));
 
     }
 
@@ -100,7 +100,7 @@ public class ProcessInstanceController {
     @GetMapping("/instance")
     public ServiceResult getProcessInstanceList() {
 
-        return ServiceResult.success(processInstanceService.getProcessInstanceList());
+        return ServiceResult.getSuccessResult(processInstanceService.getProcessInstanceList());
 
     }
 

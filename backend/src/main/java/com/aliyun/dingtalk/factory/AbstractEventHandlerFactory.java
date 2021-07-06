@@ -1,4 +1,4 @@
-package com.aliyun.dingtalk.service.factory;
+package com.aliyun.dingtalk.factory;
 
 import com.aliyun.dingtalk.service.handler.EventHandler;
 

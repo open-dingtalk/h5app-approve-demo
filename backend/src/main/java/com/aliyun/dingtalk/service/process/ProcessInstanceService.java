@@ -2,8 +2,8 @@ package com.aliyun.dingtalk.service.process;
 
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.dingtalk.constant.UrlConstant;
+import com.aliyun.dingtalk.exception.InvokeDingTalkException;
 import com.aliyun.dingtalk.model.ProcessInstanceInputVO;
-import com.aliyun.dingtalk.model.ServiceResult;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.request.OapiProcessinstanceCreateRequest;
 import com.dingtalk.api.response.OapiProcessinstanceCreateResponse;
@@ -32,7 +32,7 @@ public interface ProcessInstanceService {
      * @param processInstanceInput
      * @return
      */
-    default ServiceResult createProcessInstance(ProcessInstanceInputVO processInstanceInput) {
+    default String createProcessInstance(ProcessInstanceInputVO processInstanceInput) {
 
         try {
             // 创建client
@@ -44,18 +44,17 @@ public interface ProcessInstanceService {
             logger.info("invoke dingTalk create process instance params request: {}", JSONObject.toJSON(request));
             OapiProcessinstanceCreateResponse response = client.execute(request, getAccessToken());
             logger.info("invoke dingTalk response: {}", JSONObject.toJSON(response));
-            if (!response.isSuccess()) {
-                return ServiceResult.failure(String.valueOf(response.getErrorCode()), response.getErrmsg());
+            if (response.isSuccess()) {
+                // 流程创建完成处理业务逻辑
+                postHandler();
+                return response.getProcessInstanceId();
+            } else {
+                throw new InvokeDingTalkException(response.getErrorCode(), response.getErrmsg());
             }
-            // 流程创建完成处理业务逻辑
-            postHandler();
-
-            return ServiceResult.success(response.getProcessInstanceId());
 
         } catch (ApiException e) {
-
             e.printStackTrace();
-            return ServiceResult.failure(e.getErrCode(), e.getMessage());
+            throw new InvokeDingTalkException(e.getErrCode(), e.getErrMsg());
         }
 
     }

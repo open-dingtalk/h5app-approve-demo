@@ -66,7 +66,7 @@ class List extends React.Component {
             .then(function (response) {
                 alert("success");
                 // 根据instanceId获取实例详情
-                // axios.get(domain + '/process/instance/' + response.data.result)
+                // axios.get(domain + '/process/instance/' + response.data.data)
                 //     .then(response => {
                 //         alert(JSON.stringify(response.data))
                 //         // console.log(response)
@@ -86,9 +86,9 @@ class List extends React.Component {
         // 根据instanceId获取实例详情
         axios.get(domain + '/process/instance')
             .then(response => {
-                // alert(JSON.stringify(response.data.result))
+                // alert(JSON.stringify(response.data.data))
                 this.setState(
-                    {items: response.data.result, isLoaded: true}
+                    {items: response.data.data, isLoaded: true}
                 )
             })
             .catch(error => {

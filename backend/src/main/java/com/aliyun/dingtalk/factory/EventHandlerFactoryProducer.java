@@ -1,14 +1,14 @@
-package com.aliyun.dingtalk.service.factory;
+package com.aliyun.dingtalk.factory;
 
 import com.aliyun.dingtalk.config.ApplicationContextHolder;
 import com.aliyun.dingtalk.constant.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * 获取事件工厂 事件参考文档：https://developers.dingtalk.com/document/app/event-list
  */
-@Service
+@Component
 public class EventHandlerFactoryProducer {
 
     @Autowired

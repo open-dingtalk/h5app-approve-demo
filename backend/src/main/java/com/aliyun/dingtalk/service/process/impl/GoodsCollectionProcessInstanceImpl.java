@@ -3,6 +3,7 @@ package com.aliyun.dingtalk.service.process.impl;
 import com.aliyun.dingtalk.cache.LocalCache;
 import com.aliyun.dingtalk.config.AppConfig;
 import com.aliyun.dingtalk.constant.UrlConstant;
+import com.aliyun.dingtalk.exception.InvokeDingTalkException;
 import com.aliyun.dingtalk.model.ProcessInstanceInputVO;
 import com.aliyun.dingtalk.service.process.ProcessInstanceService;
 import com.aliyun.dingtalk.util.AccessTokenUtil;
@@ -11,6 +12,7 @@ import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiProcessinstanceCreateRequest;
 import com.dingtalk.api.request.OapiProcessinstanceGetRequest;
 import com.dingtalk.api.response.OapiProcessinstanceGetResponse;
+import com.taobao.api.ApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +61,7 @@ public class GoodsCollectionProcessInstanceImpl implements ProcessInstanceServic
     @Override
     public String getAccessToken() {
 
-        return AccessTokenUtil.getToken(appConfig.getAppKey(), appConfig.getAppSecret());
+        return AccessTokenUtil.getAccessToken(appConfig.getAppKey(), appConfig.getAppSecret());
     }
 
     @Override
@@ -69,15 +71,15 @@ public class GoodsCollectionProcessInstanceImpl implements ProcessInstanceServic
             OapiProcessinstanceGetRequest request = new OapiProcessinstanceGetRequest();
             request.setProcessInstanceId(instanceId);
             OapiProcessinstanceGetResponse response = client.execute(request, getAccessToken());
-            if (!response.isSuccess()) {
-                log.info("get process instance fail, errCode: {}, errMsg: {}", response.getErrorCode(), response.getErrmsg());
-            } else {
+            if (response.isSuccess()) {
                 return response.getProcessInstance();
+            } else {
+                throw new InvokeDingTalkException(response.getErrorCode(), response.getErrmsg());
             }
-        } catch (Exception e) {
-            log.info("get process instance exception, exception: {}", e);
+        } catch (ApiException e) {
+            e.printStackTrace();
+            throw new InvokeDingTalkException(e.getErrCode(), e.getErrMsg());
         }
-        return null;
     }
 
     /**

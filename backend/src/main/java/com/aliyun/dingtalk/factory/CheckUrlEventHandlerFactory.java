@@ -1,15 +1,15 @@
-package com.aliyun.dingtalk.service.factory;
+package com.aliyun.dingtalk.factory;
 
 import com.aliyun.dingtalk.config.ApplicationContextHolder;
 import com.aliyun.dingtalk.service.handler.EventHandler;
 import com.aliyun.dingtalk.service.handler.impl.CheckUrlEventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * 回调测试事件工厂
  */
-@Service
+@Component
 public class CheckUrlEventHandlerFactory extends AbstractEventHandlerFactory {
 
     @Autowired

@@ -1,4 +1,4 @@
-package com.aliyun.dingtalk.service.factory;
+package com.aliyun.dingtalk.factory;
 
 import com.aliyun.dingtalk.config.ApplicationContextHolder;
 import com.aliyun.dingtalk.constant.Constant;
@@ -6,12 +6,12 @@ import com.aliyun.dingtalk.service.handler.EventHandler;
 import com.aliyun.dingtalk.service.handler.impl.BpmInstanceChangeEventHandler;
 import com.aliyun.dingtalk.service.handler.impl.BpmTaskChangeEventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * 审批事件处理工厂 获取事件处理实现
  */
-@Service
+@Component
 public class BpmEventHandlerFactory extends AbstractEventHandlerFactory {
 
     @Autowired

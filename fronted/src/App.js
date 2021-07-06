@@ -41,7 +41,7 @@ dd.ready(function () {
         .then(res => res.json())
         .then((result) => {
             // alert(JSON.stringify(result));
-            corpId = result.result.corpId;
+            corpId = result.data.corpId;
             // dd.ready参数为回调函数，在环境准备就绪时触发，jsapi的调用需要保证在该回调函数触发后调用，否则无效。
             dd.runtime.permission.requestAuthCode({
 
@@ -52,11 +52,11 @@ dd.ready(function () {
                         .then(response => {
                             // alert(JSON.stringify(response));
                             // alert(JSON.stringify(response.data));
-                            // alert(JSON.stringify(response.data.result.userid));
-                            // alert(JSON.stringify(response.data.result.deptIdList[0]));
+                            // alert(JSON.stringify(response.data.data.userid));
+                            // alert(JSON.stringify(response.data.data.deptIdList[0]));
                             // 登录成功后储存用户部门和ID
-                            sessionStorage.setItem("userId", response.data.result.userid);
-                            sessionStorage.setItem("deptId", response.data.result.deptIdList[0]);
+                            sessionStorage.setItem("userId", response.data.data.userid);
+                            sessionStorage.setItem("deptId", response.data.data.deptIdList[0]);
                         })
                         .catch(error => {
                             alert(JSON.stringify(error))

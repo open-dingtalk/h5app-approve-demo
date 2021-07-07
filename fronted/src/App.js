@@ -5,8 +5,7 @@ import List from './List'
 
 //内网穿透工具介绍:
 // https://developers.dingtalk.com/document/resourcedownload/http-intranet-penetration?pnamespace=app
-// 替换成后端服务域名
-export const domain = "http://localhost:8080";
+export const domain = "";
 
 function App() {
 

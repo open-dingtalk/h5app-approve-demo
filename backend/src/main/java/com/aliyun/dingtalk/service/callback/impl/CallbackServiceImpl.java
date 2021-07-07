@@ -45,7 +45,7 @@ public class CallbackServiceImpl implements CallbackService {
         } catch (DingCallbackCrypto.DingTalkEncryptException e) {
             e.printStackTrace();
             log.error("process callback failed！msg: {}", e);
-            return null;
+            throw new RuntimeException("process callback failed！");
         }
     }
 }

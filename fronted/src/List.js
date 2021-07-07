@@ -83,7 +83,7 @@ class List extends React.Component {
     };
 
     getTableRowData = () => {
-        // 根据instanceId获取实例详情
+        // 获取审批列表
         axios.get(domain + '/process/instance')
             .then(response => {
                 // alert(JSON.stringify(response.data.data))

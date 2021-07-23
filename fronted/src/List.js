@@ -96,14 +96,16 @@ class List extends React.Component {
 
     onFinish = (values) => {
         console.log(values.add);
-        const adds = [];
+        const detailForms = [];
         values.add.map(element => {
-            adds.push({"name": "物品名称", "value": element.name});
-            adds.push({"name":"数量","value":element.count});
+            detailForms.push({
+                "textForms": [{"name": "物品名称", "value": element.name}, {
+                    "name": "数量",
+                    "value": element.count
+                }], "name": "物品明细"
+            });
         });
-        const detailForms = [{
-            "textForms":adds,name:"物品明细"
-        }]
+
         const textForms = [{"name": "物品用途","value":values.purpose},{"name":"领用详情","value":values.detail}]
 
         this.goodsCollectionAndApprove(detailForms,textForms)

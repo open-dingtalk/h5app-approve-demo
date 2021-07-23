@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
 import {domain} from "./App";
-import {Form, Input, Button } from "antd";
+import {Form, Input, Button, Space} from "antd";
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 const buttonStyle = {height:'60px',margin: '10px', padding: '10px', fontsize:'18px'};
 
@@ -94,13 +95,19 @@ class List extends React.Component {
     };
 
     onFinish = (values) => {
+        console.log(values.add);
+        const adds = [];
+        values.add.map(element => {
+            adds.push({"name": "物品名称", "value": element.name});
+            adds.push({"name":"数量","value":element.count});
+        });
         const detailForms = [{
-            "textForms":[{"name": "物品名称", "value": values.name},{"name":"数量","value":values.count}],name:"物品明细"
+            "textForms":adds,name:"物品明细"
         }]
         const textForms = [{"name": "物品用途","value":values.purpose},{"name":"领用详情","value":values.detail}]
 
         this.goodsCollectionAndApprove(detailForms,textForms)
-        console.log('Success:', JSON.stringify(values));
+        console.log('Success:', values);
       };
 
     render() {
@@ -121,21 +128,43 @@ class List extends React.Component {
                     <Input placeholder="如：日常办公"/>
                 </Form.Item>
 
-                <Form.Item
-                    label="物品名称"
-                    name="name"
-                    rules={[{ required: true, message: '请输入物品名称!' }]}
-                >
-                    <Input placeholder="请输入物品名称"/>
-                </Form.Item>
+                <Form.List name="add" initialValue={[{}]}>
+                    {(fields, { add , remove }) => (
+                    <>
+                        {fields.map(({ key, name, fieldKey, ...restField }) => (
+                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
 
-                <Form.Item
-                    label="数量"
-                    name="count"
-                    rules={[{ required: true, message: '请输入数量!' }]}
-                >
-                    <Input placeholder="请输入数量"/>
-                </Form.Item>
+                            <Form.Item
+                                label="物品名称"
+                                name={[name, 'name']}
+                                // fieldKey={[fieldKey, 'first']}
+                                rules={[{ required: true, message: '请输入物品名称!' }]}
+                            >
+                                <Input placeholder="请输入物品名称"/>
+                            </Form.Item>
+
+                            <Form.Item
+                                label="数量"
+                                name={[name, 'count']}
+                                // fieldKey={[fieldKey, 'last']}
+                                rules={[{ required: true, message: '请输入数量!' }]}
+                            >
+                                <Input placeholder="请输入数量"/>
+                            </Form.Item>
+
+                            <MinusCircleOutlined onClick={() => remove(name)} />
+                        </Space>
+                        ))}
+                        <Form.Item>
+                        <Button type="dashed" onClick={() => add(1)} block icon={<PlusOutlined />}>
+                            增加物品明细
+                        </Button>
+                        </Form.Item>
+                    </>
+                    )}
+                </Form.List>
+
+
 
                 <Form.Item
                     label="领用详情"

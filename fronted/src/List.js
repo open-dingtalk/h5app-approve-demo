@@ -100,7 +100,7 @@ class List extends React.Component {
     render() {
         if (!this.state.isLoaded) {
             return (<div>
-                <button style={buttonStyle} onClick={this.goodsCollectionAndApprove}>领用并提交审批</button>
+                <button style={buttonStyle} onClick={this.goodsCollectionAndApprove}>领用并提交审批111</button>
                 <button style={buttonStyle} onClick={this.getTableRowData}>获取提交的审批信息</button>
             </div>)
         } else {

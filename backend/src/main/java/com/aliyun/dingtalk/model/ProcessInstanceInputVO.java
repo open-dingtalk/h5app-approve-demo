@@ -5,8 +5,9 @@ import com.dingtalk.api.request.OapiProcessinstanceCreateRequest.FormComponentVa
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author 令久
@@ -217,6 +218,7 @@ public class ProcessInstanceInputVO {
 
     /**
      * 生成FormComponentValueVo，用于调用发起审批实例的接口
+     *
      * @return
      */
     public List<FormComponentValueVo> generateForms() {
@@ -234,9 +236,10 @@ public class ProcessInstanceInputVO {
         }
 
         if (!CollectionUtils.isEmpty(detailForms)) {
-            for (DetailForm detailForm : detailForms) {
-                result.add(generateFormWithDetailForm(detailForm));
-            }
+            Map<String, List<DetailForm>> detailFormMapByName = detailForms.stream().collect(Collectors.groupingBy(DetailForm::getName));
+            detailFormMapByName.forEach((k, v) ->
+                    result.add(generateFormWithDetailForm(k, v))
+            );
         }
         return result;
     }
@@ -255,24 +258,27 @@ public class ProcessInstanceInputVO {
         return form;
     }
 
-    private FormComponentValueVo generateFormWithDetailForm(DetailForm detailForm) {
+    private FormComponentValueVo generateFormWithDetailForm(String name, List<DetailForm> detailForms) {
         FormComponentValueVo form = new FormComponentValueVo();
-        form.setName(detailForm.getName());
-
-        List<FormComponentValueVo> forms = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(detailForm.getTextForms())) {
-            for (TextForm textForm : detailForm.getTextForms()) {
-                forms.add(generateFormWithTextForm(textForm));
+        form.setName(name);
+        List<List<FormComponentValueVo>> detailList = new ArrayList<>();
+        detailForms.forEach(detailForm -> {
+            List<FormComponentValueVo> forms = new ArrayList<>();
+            if (!CollectionUtils.isEmpty(detailForm.getTextForms())) {
+                for (TextForm textForm : detailForm.getTextForms()) {
+                    forms.add(generateFormWithTextForm(textForm));
+                }
             }
-        }
 
-        if (!CollectionUtils.isEmpty(detailForm.pictureForms)) {
-            for (PictureForm pictureForm : detailForm.pictureForms) {
-                forms.add(generateFormWithPictureForm(pictureForm));
+            if (!CollectionUtils.isEmpty(detailForm.pictureForms)) {
+                for (PictureForm pictureForm : detailForm.pictureForms) {
+                    forms.add(generateFormWithPictureForm(pictureForm));
+                }
             }
-        }
+            detailList.add(forms);
+        });
 
-        form.setValue(JSON.toJSONString(Arrays.asList(forms)));
+        form.setValue(JSON.toJSONString(detailList));
 
         return form;
     }

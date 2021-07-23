@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import {domain} from "./App";
+import {Form, Input, Button } from "antd";
 
 const buttonStyle = {height:'60px',margin: '10px', padding: '10px', fontsize:'18px'};
 
@@ -38,20 +39,15 @@ class List extends React.Component {
         };
     };
 
-    goodsCollectionAndApprove = () => {
+    goodsCollectionAndApprove = (detailForms,textForms) => {
         // 获取存储的用户部门和ID
         const userId = sessionStorage.getItem('userId');
         const deptId = sessionStorage.getItem('deptId');
         // demo直接构建了要请求的数据，实际开发需要从页面获取
         const data = {
-            "detailForms": [{
-                "textForms": [{"name": "物品名称", "value": "测试物品领用-电脑"}, {
-                    "name": "数量",
-                    "value": "3"
-                }], "name": "物品明细"
-            }],
+            "detailForms": detailForms,
             "originatorUserId": userId,
-            "textForms": [{"name": "物品用途", "value": "测试物品领用"}, {"name": "领用详情", "value": "领用详情1"}],
+            "textForms": textForms,
             "deptId": deptId
         };
         // 创建审批流程
@@ -97,32 +93,90 @@ class List extends React.Component {
             })
     };
 
+    onFinish = (values) => {
+        const detailForms = [{
+            "textForms":[{"name": "物品名称", "value": values.name},{"name":"数量","value":values.count}],name:"物品明细"
+        }]
+        const textForms = [{"name": "物品用途","value":values.purpose},{"name":"领用详情","value":values.detail}]
+
+        this.goodsCollectionAndApprove(detailForms,textForms)
+        console.log('Success:', JSON.stringify(values));
+      };
+
     render() {
-        if (!this.state.isLoaded) {
-            return (<div>
-                <button style={buttonStyle} onClick={this.goodsCollectionAndApprove}>领用并提交审批</button>
-                <button style={buttonStyle} onClick={this.getTableRowData}>获取提交的审批信息</button>
-            </div>)
-        } else {
-            return (<div>
-                <button style={buttonStyle} onClick={this.goodsCollectionAndApprove}>领用并提交审批</button>
-                <button style={buttonStyle} onClick={this.getTableRowData}>获取提交的审批信息</button>
-                <table className="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>物品用途</th>
-                        <th>审批状态</th>
-                        <th>审批人</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+        return <div style={{padding:'20px'}}>
+            <Form
+            name="basic"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+            initialValues={{ remember: true }}
+            onFinish={this.onFinish}
+            onFinishFailed={this.onFinishFailed}
+            >
+                <Form.Item
+                    label="物品用途"
+                    name="purpose"
+                    rules={[{ required: true, message: '请输入物品用途!' }]}
+                >
+                    <Input placeholder="如：日常办公"/>
+                </Form.Item>
 
-                    <TrData items={this.state.items}/>
+                <Form.Item
+                    label="物品名称"
+                    name="name"
+                    rules={[{ required: true, message: '请输入物品名称!' }]}
+                >
+                    <Input placeholder="请输入物品名称"/>
+                </Form.Item>
 
-                    </tbody>
-                </table>
-            </div>)
-        }
+                <Form.Item
+                    label="数量"
+                    name="count"
+                    rules={[{ required: true, message: '请输入数量!' }]}
+                >
+                    <Input placeholder="请输入数量"/>
+                </Form.Item>
+
+                <Form.Item
+                    label="领用详情"
+                    name="detail"
+                    rules={[{ required: true, message: '请输入物品零用详情说明!' }]}
+                >
+                    <Input placeholder="请输入物品零用详情说明"/>
+                </Form.Item>
+
+                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                    <Button type="primary" htmlType="submit">
+                    领用并提交审批
+                    </Button>
+                </Form.Item>
+            </Form>
+        </div>
+        // if (!this.state.isLoaded) {
+        //     return (<div>
+        //         <button style={buttonStyle} onClick={this.goodsCollectionAndApprove}>领用并提交审批</button>
+        //         <button style={buttonStyle} onClick={this.getTableRowData}>获取提交的审批信息</button>
+        //     </div>)
+        // } else {
+        //     return (<div>
+        //         <button style={buttonStyle} onClick={this.goodsCollectionAndApprove}>领用并提交审批</button>
+        //         <button style={buttonStyle} onClick={this.getTableRowData}>获取提交的审批信息</button>
+        //         <table className="table table-bordered">
+        //             <thead>
+        //             <tr>
+        //                 <th>物品用途</th>
+        //                 <th>审批状态</th>
+        //                 <th>审批人</th>
+        //             </tr>
+        //             </thead>
+        //             <tbody>
+
+        //             <TrData items={this.state.items}/>
+
+        //             </tbody>
+        //         </table>
+        //     </div>)
+        // }
     }
 }
 

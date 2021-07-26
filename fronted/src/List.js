@@ -62,7 +62,7 @@ class List extends React.Component {
             }
         })
             .then(function (response) {
-                if(response.success){
+                if(response.data.success){
                     alert("审批提交成功")
                 }else{
                     alert("审批创建失败")
@@ -171,8 +171,8 @@ class List extends React.Component {
                 let res = {};
                 let params = [];
                 response.data.data.map((vl)=>{
-                    res = {operationResult:vl.operationRecords[0].operationResult,status:vl.status};
-                    let ret = {};
+                    res = {};
+                    let ret = {operationResult:vl.operationRecords[0].operationResult,status:vl.status};
                     vl.formComponentValues.map(it=>{
                         if(it.name==='物品用途'){
                             ret.purpose = it.value;
@@ -342,16 +342,21 @@ class List extends React.Component {
           key: 'detail',
         },{
             title: '审批状态',
-            dataIndex: 'operationResult',
-            key: 'operationResult', 
+            dataIndex: 'status',
+            key: 'status', 
             render:status=>{
+                console.log(status,'=====');
                 switch(status){
-                    case 'AGREE':
-                        <>同意</>;
-                    case 'REFUSE':
-                        <>拒绝</>;
-                    case 'NONE':
-                        <>等待</>
+                    case 'NEW':
+                        <>新创建</>;
+                    case 'RUNNING':
+                        <>审批中</>;
+                    case 'TERMINATED':
+                        <>被终止</>;
+                    case 'COMPLETED':
+                        <>完成</>;
+                    case 'CANCELED':
+                        <>取消</>;              
                     break;
                 }
                     

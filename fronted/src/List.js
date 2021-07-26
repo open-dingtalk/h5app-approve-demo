@@ -4,31 +4,31 @@ import {domain} from "./App";
 import {Form, Input, Button, Space, Table} from "antd";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
-const buttonStyle = {height:'60px',margin: '10px', padding: '10px', fontsize:'18px'};
+// const buttonStyle = {height:'60px',margin: '10px', padding: '10px', fontsize:'18px'};
 
-class TrData extends React.Component {
-    constructor(props) {
-        super(props);
+// class TrData extends React.Component {
+//     constructor(props) {
+//         super(props);
 
-    }
+//     }
 
-    render() {
-        return (
-            this.props.items.map((item) => {
-                const name = item.formComponentValues[0].name;
-                const result = item.result;
-                const approveUserid = item.approverUserids[0];
-                return (
-                    <tr className="text-center">
-                        <td>{name}</td>
-                        <td>{result}</td>
-                        <td>{approveUserid}</td>
-                    </tr>
-                )
-            })
-        )
-    }
-}
+//     render() {
+//         return (
+//             this.props.items.map((item) => {
+//                 const name = item.formComponentValues[0].name;
+//                 const result = item.result;
+//                 const approveUserid = item.approverUserids[0];
+//                 return (
+//                     <tr className="text-center">
+//                         <td>{name}</td>
+//                         <td>{result}</td>
+//                         <td>{approveUserid}</td>
+//                     </tr>
+//                 )
+//             })
+//         )
+//     }
+// }
 
 class List extends React.Component {
 
@@ -80,37 +80,118 @@ class List extends React.Component {
             });
     };
 
+    // response = {
+    //     "success": true,
+    //     "errorCode": null,
+    //     "errorMsg": null,
+    //     "data": [
+    //         {
+    //             "approverUserids": [
+    //                 "043217290519980938"
+    //             ],
+    //             "attachedProcessInstanceIds": [],
+    //             "bizAction": "NONE",
+    //             "businessId": "202107261018000327301",
+    //             "ccUserids": [
+    //                 "043217290519980938"
+    //             ],
+    //             "createTime": "2021-07-26T02:18:33.000+00:00",
+    //             "finishTime": null,
+    //             "formComponentValues": [
+    //                 {
+    //                     "componentType": "TextField",
+    //                     "extValue": null,
+    //                     "id": "物品用途",
+    //                     "name": "物品用途",
+    //                     "value": "测试物品领用"
+    //                 },
+    //                 {
+    //                     "componentType": "TableField",
+    //                     "extValue": "{\"statValue\":[],\"componentName\":\"TableField\"}",
+    //                     "id": "TableField-MINGXI",
+    //                     "name": "物品明细",
+    //                     "value": "[{\"rowValue\":[{\"componentType\":\"TextField\",\"label\":\"物品名称\",\"value\":\"测试物品领用-电脑\",\"key\":\"物品名称\"},{\"componentType\":\"NumberField\",\"label\":\"数量\",\"value\":\"3\",\"key\":\"数量\"},{\"componentType\":\"DDPhotoField\",\"label\":\"图片\",\"value\":\"[\\\"https://img.alicdn.com/imgextra/i4/O1CN01Y2sejp27k1TCmDENg_!!6000000007834-2-tps-1924-918.png\\\",\\\"https://img.alicdn.com/imgextra/i4/O1CN015zvwqo1WDNSZzfk4O_!!6000000002754-2-tps-2878-1520.png\\\"]\",\"key\":\"DDPhotoField_1D4MDW1RQTZ40\"}]},{\"rowValue\":[{\"componentType\":\"TextField\",\"label\":\"物品名称\",\"value\":\"测试物品领用-电脑1\",\"key\":\"物品名称\"},{\"componentType\":\"NumberField\",\"label\":\"数量\",\"value\":\"2\",\"key\":\"数量\"}]}]"
+    //                 },
+    //                 {
+    //                     "componentType": "TextareaField",
+    //                     "extValue": null,
+    //                     "id": "领用详情",
+    //                     "name": "领用详情",
+    //                     "value": "领用详情1"
+    //                 },
+    //                 {
+    //                     "componentType": "DDPhotoField",
+    //                     "extValue": null,
+    //                     "id": "图片",
+    //                     "name": "图片",
+    //                     "value": "null"
+    //                 }
+    //             ],
+    //             "mainProcessInstanceId": null,
+    //             "operationRecords": [
+    //                 {
+    //                     "attachments": null,
+    //                     "date": "2021-07-26T02:18:32.000+00:00",
+    //                     "operationResult": "NONE",
+    //                     "operationType": "START_PROCESS_INSTANCE",
+    //                     "remark": null,
+    //                     "userid": "043217290519980938"
+    //                 }
+    //             ],
+    //             "originatorDeptId": "-1",
+    //             "originatorDeptName": "浩倡测试企业申请认证",
+    //             "originatorUserid": "043217290519980938",
+    //             "result": "",
+    //             "status": "RUNNING",
+    //             "tasks": [
+    //                 {
+    //                     "activityId": "b5ebc027-2f09-47b8-9b20-34c7ac4f02a3",
+    //                     "createTime": "2021-07-26T02:18:33.000+00:00",
+    //                     "finishTime": null,
+    //                     "taskResult": "NONE",
+    //                     "taskStatus": "RUNNING",
+    //                     "taskid": "69699095515",
+    //                     "url": "?procInsId=57b2e166-2897-40f5-b71b-698d7cc5ef40&taskId=69699095515&businessId=202107261018000327301",
+    //                     "userid": "043217290519980938"
+    //                 }
+    //             ],
+    //             "title": "万志强提交的测试物品领用"
+    //         }
+    //     ]
+    // }
+
     getTableRowData = () => {
         // 获取审批列表
         axios.get(domain + '/process/instance')
             .then(response => {
                 // alert(JSON.stringify(response.data.data))
-                console.log(response,'=====')
+                let res = {};
                 let params = [];
                 response.data.map((vl)=>{
-                    let ret = {operationResult:vl.operationRecords.operationResult,status:vl.status};
+                    res = {operationResult:vl.operationRecords[0].operationResult,status:vl.status};
+                    let ret = {};
                     vl.formComponentValues.map(it=>{
-                        let res = {};
                         if(it.name==='物品用途'){
-                            res.purpose = it.value;
+                            ret.purpose = it.value;
                         }else if(it.name === '物品明细'){
-                            res.more = it.value;
+                            ret.more = JSON.parse(it.value).map(item=>{
+                                return `${item.rowValue[0].value}--${item.rowValue[1].value}`
+                            });
                         }else if(it.name === '领用详情'){
-                            res.detail = it.value;
+                            ret.detail = it.value;
                         }
-                        params.push(res)
                     })
-                    ret.formComponentValues = params
+                    params.push(ret)
+                    res.formComponentValues = params
                 })
                 this.setState(
-                    {items: ret, isLoaded: true}
+                    {items: res, isLoaded: true}
                 )
-                console.log(ret,'params',params,'11111======')
             })
             .catch(error => {
                 alert(JSON.stringify(error))
-                // console.log(error.message)
             })
+                // console.log(error.message)
     };
 
     onFinish = (values) => {
@@ -200,13 +281,13 @@ class List extends React.Component {
                 </Form.Item>
             </Form>}
             <a onClick={()=>{
-                this.setState({auditList:true})
+                this.setState({auditList:!this.state.auditList})
                 this.getTableRowData()
                 }} >
-                查看审批记录
+                {this.state.auditList?'提交申领审批':'查看审批记录'}
             </a>
             {
-                this.state.auditList && <Table columns={this.columns} dataSource={this.state.items} />
+                this.state.auditList && <Table columns={this.columns} dataSource={this.state.items.formComponentValues} />
             }
         </div>
         // if (!this.state.isLoaded) {
@@ -248,6 +329,9 @@ class List extends React.Component {
           key: 'more',
           render:value=>{
             console.log(value,'=====')
+            return value.map(text=>{
+                return <p>{text}</p>
+            })
           }
         },
         {

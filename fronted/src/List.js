@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import {domain} from "./App";
 import {Form, Input, Button, Space, Table} from "antd";
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 
 // const buttonStyle = {height:'60px',margin: '10px', padding: '10px', fontsize:'18px'};
 
@@ -37,11 +37,11 @@ class List extends React.Component {
         this.state = {
             items: [],
             isLoaded: false,
-            auditList:false,
+            auditList: false,
         };
     };
 
-    goodsCollectionAndApprove = (detailForms,textForms) => {
+    goodsCollectionAndApprove = (detailForms, textForms) => {
         // 获取存储的用户部门和ID
         const userId = sessionStorage.getItem('userId');
         const deptId = sessionStorage.getItem('deptId');
@@ -62,9 +62,9 @@ class List extends React.Component {
             }
         })
             .then(function (response) {
-                if(response.success){
+                if (response.data.success) {
                     alert("审批提交成功")
-                }else{
+                } else {
                     alert("审批创建失败")
                 }
                 // 根据instanceId获取实例详情
@@ -170,17 +170,17 @@ class List extends React.Component {
             .then(response => {
                 let res = {};
                 let params = [];
-                response.data.data.map((vl)=>{
-                    res = {operationResult:vl.operationRecords[0].operationResult,status:vl.status};
+                response.data.data.map((vl) => {
+                    res = {operationResult: vl.operationRecords[0].operationResult, status: vl.status};
                     let ret = {};
-                    vl.formComponentValues.map(it=>{
-                        if(it.name==='物品用途'){
+                    vl.formComponentValues.map(it => {
+                        if (it.name === '物品用途') {
                             ret.purpose = it.value;
-                        }else if(it.name === '物品明细'){
-                            ret.more = JSON.parse(it.value).map(item=>{
+                        } else if (it.name === '物品明细') {
+                            ret.more = JSON.parse(it.value).map(item => {
                                 return `${item.rowValue[0].value}--${item.rowValue[1].value}`
                             });
-                        }else if(it.name === '领用详情'){
+                        } else if (it.name === '领用详情') {
                             ret.detail = it.value;
                         }
                     })
@@ -194,7 +194,7 @@ class List extends React.Component {
             .catch(error => {
                 alert(JSON.stringify(error))
             })
-                // console.log(error.message)
+        // console.log(error.message)
     };
 
     onFinish = (values) => {
@@ -209,87 +209,88 @@ class List extends React.Component {
             });
         });
 
-        const textForms = [{"name": "物品用途","value":values.purpose},{"name":"领用详情","value":values.detail}]
+        const textForms = [{"name": "物品用途", "value": values.purpose}, {"name": "领用详情", "value": values.detail}]
 
-        this.goodsCollectionAndApprove(detailForms,textForms)
-      };
+        this.goodsCollectionAndApprove(detailForms, textForms)
+    };
 
     render() {
-        return <div style={{padding:'20px'}}>
-            {!this.state.auditList&&<Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
-            onFinish={this.onFinish}
-            onFinishFailed={this.onFinishFailed}
+        return <div style={{padding: '20px'}}>
+            {!this.state.auditList && <Form
+                name="basic"
+                labelCol={{span: 8}}
+                wrapperCol={{span: 16}}
+                initialValues={{remember: true}}
+                onFinish={this.onFinish}
+                onFinishFailed={this.onFinishFailed}
             >
                 <Form.Item
                     label="物品用途"
                     name="purpose"
-                    rules={[{ required: true, message: '请输入物品用途!' }]}
+                    rules={[{required: true, message: '请输入物品用途!'}]}
                 >
                     <Input placeholder="如：日常办公"/>
                 </Form.Item>
 
                 <Form.List name="add" initialValue={[{}]}>
-                    {(fields, { add , remove }) => (
-                    <>
-                        {fields.map(({ key, name, fieldKey, ...restField }) => (
-                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                    {(fields, {add, remove}) => (
+                        <>
+                            {fields.map(({key, name, fieldKey, ...restField}) => (
+                                <Space key={key} style={{display: 'flex', marginBottom: 8}} align="baseline">
 
-                            <Form.Item
-                                label="物品名称"
-                                name={[name, 'name']}
-                                // fieldKey={[fieldKey, 'first']}
-                                rules={[{ required: true, message: '请输入物品名称!' }]}
-                            >
-                                <Input placeholder="请输入物品名称"/>
+                                    <Form.Item
+                                        label="物品名称"
+                                        name={[name, 'name']}
+                                        // fieldKey={[fieldKey, 'first']}
+                                        rules={[{required: true, message: '请输入物品名称!'}]}
+                                    >
+                                        <Input placeholder="请输入物品名称"/>
+                                    </Form.Item>
+
+                                    <Form.Item
+                                        label="数量"
+                                        name={[name, 'count']}
+                                        // fieldKey={[fieldKey, 'last']}
+                                        rules={[{required: true, message: '请输入数量!'}]}
+                                    >
+                                        <Input placeholder="请输入数量"/>
+                                    </Form.Item>
+
+                                    <MinusCircleOutlined onClick={() => remove(name)}/>
+                                </Space>
+                            ))}
+                            <Form.Item>
+                                <Button type="dashed" onClick={() => add(1)} block icon={<PlusOutlined/>}>
+                                    增加物品明细
+                                </Button>
                             </Form.Item>
-
-                            <Form.Item
-                                label="数量"
-                                name={[name, 'count']}
-                                // fieldKey={[fieldKey, 'last']}
-                                rules={[{ required: true, message: '请输入数量!' }]}
-                            >
-                                <Input placeholder="请输入数量"/>
-                            </Form.Item>
-
-                            <MinusCircleOutlined onClick={() => remove(name)} />
-                        </Space>
-                        ))}
-                        <Form.Item>
-                        <Button type="dashed" onClick={() => add(1)} block icon={<PlusOutlined />}>
-                            增加物品明细
-                        </Button>
-                        </Form.Item>
-                    </>
+                        </>
                     )}
                 </Form.List>
 
                 <Form.Item
                     label="领用详情"
                     name="detail"
-                    rules={[{ required: true, message: '请输入物品零用详情说明!' }]}
+                    rules={[{required: true, message: '请输入物品零用详情说明!'}]}
                 >
                     <Input placeholder="请输入物品零用详情说明"/>
                 </Form.Item>
 
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Form.Item wrapperCol={{offset: 8, span: 16}}>
                     <Button type="primary" htmlType="submit">
-                    领用并提交审批
+                        领用并提交审批
                     </Button>
                 </Form.Item>
             </Form>}
-            <a onClick={()=>{
-                this.setState({auditList:!this.state.auditList})
+            <a onClick={() => {
+                this.setState({auditList: !this.state.auditList})
                 this.getTableRowData()
-                }} >
-                {this.state.auditList?'提交申领审批':'查看审批记录'}
+            }}>
+                {this.state.auditList ? '提交申领审批' : '查看审批记录'}
             </a>
             {
-                this.state.auditList && <Table columns={this.columns} dataSource={this.state.items.formComponentValues} hideOnSinglePage={true}/>
+                this.state.auditList && <Table columns={this.columns} dataSource={this.state.items.formComponentValues}
+                                               hideOnSinglePage={true}/>
             }
         </div>
         // if (!this.state.isLoaded) {
@@ -321,40 +322,44 @@ class List extends React.Component {
 
     columns = [
         {
-          title: '物品用途',
-          dataIndex: 'purpose',
-          key: 'purpose',
+            title: '物品用途',
+            dataIndex: 'purpose',
+            key: 'purpose',
         },
         {
-          title: '物品明细',
-          dataIndex: 'more',
-          key: 'more',
-          render:value=>{
-            console.log(value,'=====')
-            return value.map(text=>{
-                return <p>{text}</p>
-            })
-          }
+            title: '物品明细',
+            dataIndex: 'more',
+            key: 'more',
+            render: value => {
+                console.log(value, '=====')
+                return value.map(text => {
+                    return <p>{text}</p>
+                })
+            }
         },
         {
-          title: '领用详情',
-          dataIndex: 'detail',
-          key: 'detail',
-        },{
-            title: '审批状态',
-            dataIndex: 'operationResult',
-            key: 'operationResult', 
-            render:status=>{
-                switch(status){
-                    case 'AGREE':
-                        <>同意</>;
-                    case 'REFUSE':
-                        <>拒绝</>;
-                    case 'NONE':
-                        <>等待</>
-                    break;
+            title: '领用详情',
+            dataIndex: 'detail',
+            key: 'detail',
+        }, {
+            title: '流程状态',
+            dataIndex: 'status',
+            key: 'status',
+            render: status => {
+                console.log(this.state.items);
+                console.log("status: " + status);
+                switch (status) {
+                    case 'NEW':
+                        <>新建</>;
+                    case 'RUNNING':
+                        <>审批中</>;
+                    case 'COMPLETED':
+                        <>完成</>
+                    case 'CANCELED':
+                        <>取消</>
+                        break;
                 }
-                    
+
             }
         }]
 }

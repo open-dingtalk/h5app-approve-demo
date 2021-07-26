@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import {domain} from "./App";
-import {Form, Input, Button, Space} from "antd";
+import {Form, Input, Button, Space, Table} from "antd";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 const buttonStyle = {height:'60px',margin: '10px', padding: '10px', fontsize:'18px'};
@@ -36,7 +36,8 @@ class List extends React.Component {
         super(props);
         this.state = {
             items: [],
-            isLoaded: false
+            isLoaded: false,
+            auditList:false,
         };
     };
 
@@ -84,9 +85,26 @@ class List extends React.Component {
         axios.get(domain + '/process/instance')
             .then(response => {
                 // alert(JSON.stringify(response.data.data))
+                let params = [];
+                response.data.map((vl)=>{
+                    let ret = {operationResult:vl.operationRecords.operationResult,status:vl.status};
+                    vl.formComponentValues.map(it=>{
+                        let res = {};
+                        if(it.name==='物品用途'){
+                            res.purpose = it.value;
+                        }else if(it.name === '物品明细'){
+                            res.more = it.value;
+                        }else if(it.name === '领用详情'){
+                            res.detail = it.value;
+                        }
+                        params.push(res)
+                    })
+                    ret.formComponentValues = params
+                })
                 this.setState(
-                    {items: response.data.data, isLoaded: true}
+                    {items: ret, isLoaded: true}
                 )
+                console.log(ret,'params',params,'======')
             })
             .catch(error => {
                 alert(JSON.stringify(error))
@@ -114,7 +132,7 @@ class List extends React.Component {
 
     render() {
         return <div style={{padding:'20px'}}>
-            <Form
+            {!this.state.auditList&&<Form
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
@@ -166,8 +184,6 @@ class List extends React.Component {
                     )}
                 </Form.List>
 
-
-
                 <Form.Item
                     label="领用详情"
                     name="detail"
@@ -181,7 +197,16 @@ class List extends React.Component {
                     领用并提交审批
                     </Button>
                 </Form.Item>
-            </Form>
+            </Form>}
+            <a onClick={()=>{
+                this.setState({auditList:true})
+                this.getTableRowData()
+                }} >
+                查看审批记录
+            </a>
+            {
+                this.state.auditList && <Table columns={this.columns} dataSource={this.state.items} />
+            }
         </div>
         // if (!this.state.isLoaded) {
         //     return (<div>
@@ -209,6 +234,26 @@ class List extends React.Component {
         //     </div>)
         // }
     }
+
+    columns = [
+        {
+          title: '物品用途',
+          dataIndex: 'purpose',
+          key: 'purpose',
+        },
+        {
+          title: '物品明细',
+          dataIndex: 'more',
+          key: 'more',
+          render:value=>{
+            console.log(value,'=====')
+          }
+        },
+        {
+          title: '领用详情',
+          dataIndex: 'detail',
+          key: 'detail',
+        }]
 }
 
 export default List;

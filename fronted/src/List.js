@@ -62,7 +62,11 @@ class List extends React.Component {
             }
         })
             .then(function (response) {
-                alert("success");
+                if(response.success){
+                    alert("审批提交成功")
+                }else{
+                    alert("审批创建失败")
+                }
                 // 根据instanceId获取实例详情
                 // axios.get(domain + '/process/instance/' + response.data.data)
                 //     .then(response => {
@@ -164,10 +168,9 @@ class List extends React.Component {
         // 获取审批列表
         axios.get(domain + '/process/instance')
             .then(response => {
-                // alert(JSON.stringify(response.data.data))
                 let res = {};
                 let params = [];
-                response.data.map((vl)=>{
+                response.data.data.map((vl)=>{
                     res = {operationResult:vl.operationRecords[0].operationResult,status:vl.status};
                     let ret = {};
                     vl.formComponentValues.map(it=>{
@@ -209,7 +212,6 @@ class List extends React.Component {
         const textForms = [{"name": "物品用途","value":values.purpose},{"name":"领用详情","value":values.detail}]
 
         this.goodsCollectionAndApprove(detailForms,textForms)
-        console.log('Success:', values);
       };
 
     render() {
@@ -287,7 +289,7 @@ class List extends React.Component {
                 {this.state.auditList?'提交申领审批':'查看审批记录'}
             </a>
             {
-                this.state.auditList && <Table columns={this.columns} dataSource={this.state.items.formComponentValues} />
+                this.state.auditList && <Table columns={this.columns} dataSource={this.state.items.formComponentValues} hideOnSinglePage={true}/>
             }
         </div>
         // if (!this.state.isLoaded) {
@@ -338,6 +340,22 @@ class List extends React.Component {
           title: '领用详情',
           dataIndex: 'detail',
           key: 'detail',
+        },{
+            title: '审批状态',
+            dataIndex: 'operationResult',
+            key: 'operationResult', 
+            render:status=>{
+                switch(status){
+                    case 'AGREE':
+                        <>同意</>;
+                    case 'REFUSE':
+                        <>拒绝</>;
+                    case 'NONE':
+                        <>等待</>
+                    break;
+                }
+                    
+            }
         }]
 }
 

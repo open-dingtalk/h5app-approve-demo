@@ -85,6 +85,7 @@ class List extends React.Component {
         axios.get(domain + '/process/instance')
             .then(response => {
                 // alert(JSON.stringify(response.data.data))
+                console.log(response,'=====')
                 let params = [];
                 response.data.map((vl)=>{
                     let ret = {operationResult:vl.operationRecords.operationResult,status:vl.status};
@@ -104,7 +105,7 @@ class List extends React.Component {
                 this.setState(
                     {items: ret, isLoaded: true}
                 )
-                console.log(ret,'params',params,'======')
+                console.log(ret,'params',params,'11111======')
             })
             .catch(error => {
                 alert(JSON.stringify(error))

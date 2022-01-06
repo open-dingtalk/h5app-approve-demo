@@ -70,7 +70,7 @@ https://github.com/open-dingtalk/h5app-approve-demo.git
 #### 使用命令行安装依赖&打包
 
 ```txt
-cd fronted/
+cd frontend/
 ```
 
 ![image-20210617180814765](https://img.alicdn.com/imgextra/i3/O1CN012KHlLL28HumHd2Sii_!!6000000007908-2-tps-2388-568.png)
